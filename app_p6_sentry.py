@@ -217,6 +217,6 @@ with col_right:
                 st.download_button(
                     label="📥 Download Adjudication Report",
                     data=report_text,
-                    file_name="FIDIC_Delay_Adjudication.md",
+                    file_name="FIDIC_Delay_Adjudication.doc",
                     mime="text/markdown"
                 )
