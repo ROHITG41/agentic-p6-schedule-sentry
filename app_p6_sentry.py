@@ -179,7 +179,7 @@ with col_right:
             st.info("💡 To run the AI Contractual Adjudicator, please enter your Gemini API key in the left sidebar.")
         else:
             with st.spinner("Agentic Loop Analyzing Schedule Graph & Evaluating Entitlement..."):
-                llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash", temperature=0.0)
+                llm = ChatGoogleGenerativeAI(model="gemini-3.8-flash", temperature=0.0)
                 
                 adjudication_prompt = ChatPromptTemplate.from_messages([
                     ("system", 
