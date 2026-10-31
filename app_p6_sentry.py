@@ -199,5 +199,15 @@ with col_right:
                     "crit_acts": audit_results['critical_activities'].to_string()
                 })
                 
-                st.markdown(response.content)
-                st.download_button("📥 Download Adjudication Report", data=response.content, file_name="FIDIC_Delay_Adjudication.md")
+                if isinstance(response.content, list):
+    report_text = "\n".join([p if isinstance(p, str) else p.get("text", str(p)) for p in response.content])
+else:
+    report_text = str(response.content)
+
+st.markdown(report_text)
+st.download_button(
+    label="📥 Download Adjudication Report",
+    data=report_text,
+    file_name="FIDIC_Delay_Adjudication.md",
+    mime="text/markdown"
+)
