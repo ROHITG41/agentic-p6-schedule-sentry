@@ -30,9 +30,17 @@ st.markdown("---")
 # ---------------------------------------------------------------------
 with st.sidebar:
     st.header("⚙️ System Configuration")
-    gemini_key = st.text_input("GEMINI_API_KEY", type="password")
-    if gemini_key:
-        os.environ["GEMINI_API_KEY"] = gemini_key
+    
+    # Check Streamlit Secrets first; fallback to text input
+    api_key_from_secrets = st.secrets.get("GEMINI_API_KEY", "")
+    
+    if api_key_from_secrets:
+        os.environ["GEMINI_API_KEY"] = api_key_from_secrets
+        st.success("API Key loaded securely from Secrets.")
+    else:
+        user_key = st.text_input("Enter Google Gemini API Key:", type="password")
+        if user_key:
+            os.environ["GEMINI_API_KEY"] = user_key
     
     st.markdown("### 📋 Audit Governance Standards")
     st.info(
@@ -176,7 +184,7 @@ with col_right:
         st.subheader("3. Multi-Agent Contractual Adjudication (FIDIC Cl. 8.4)")
         
         if not os.environ.get("GEMINI_API_KEY"):
-            st.info("💡 To run the AI Contractual Adjudicator, please enter your Gemini API key in the left sidebar.")
+            st.info("💡 To run the AI Contractual Adjudicator, please enter your Gemini API key in the left sidebar or configure Secrets.")
         else:
             with st.spinner("Agentic Loop Analyzing Schedule Graph & Evaluating Entitlement..."):
                 llm = ChatGoogleGenerativeAI(model="gemini-3.8-flash", temperature=0.0)
@@ -199,15 +207,16 @@ with col_right:
                     "crit_acts": audit_results['critical_activities'].to_string()
                 })
                 
+                # Format response content safely as a string
                 if isinstance(response.content, list):
-    report_text = "\n".join([p if isinstance(p, str) else p.get("text", str(p)) for p in response.content])
-else:
-    report_text = str(response.content)
+                    report_text = "\n".join([str(p.get("text", p)) if isinstance(p, dict) else str(p) for p in response.content])
+                else:
+                    report_text = str(response.content)
 
-st.markdown(report_text)
-st.download_button(
-    label="📥 Download Adjudication Report",
-    data=report_text,
-    file_name="FIDIC_Delay_Adjudication.md",
-    mime="text/markdown"
-)
+                st.markdown(report_text)
+                st.download_button(
+                    label="📥 Download Adjudication Report",
+                    data=report_text,
+                    file_name="FIDIC_Delay_Adjudication.md",
+                    mime="text/markdown"
+                )
