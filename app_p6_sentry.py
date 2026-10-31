@@ -92,7 +92,7 @@ def run_dcma14_audit(df_acts: pd.DataFrame, df_rels: pd.DataFrame, data_date: in
     if cpli < 0.95:
         reasons.append(f"CPLI is {cpli:.3f}; below minimum project feasibility threshold of 0.95")
     if bei < 0.95:
-        rejections.append(f"BEI is {bei:.3f}; execution momentum lags commitment (Target: >= 0.95)")
+        reasons.append(f"BEI is {bei:.3f}; execution momentum lags commitment (Target: >= 0.95)")
 
     return {
         "total_acts": total_acts,
