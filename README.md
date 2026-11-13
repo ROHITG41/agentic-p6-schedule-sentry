@@ -62,7 +62,7 @@ flowchart TD
 * **Deterministic Analytics:** Pandas, NumPy, Pydantic v2
 
 ### Author & Architect
-**Rohit Kumar, PMP, CEng, CEA, FSEr (TÜV)**  
+**Rohit Kumar, PMP, CEng (India), CEA, FSEr (TÜV)**  
 Cross-Technology Technical Architect | Mission-Critical Infrastructure & Applied AI Solutions  
 [LinkedIn](https://www.linkedin.com/in/rohitg41) | [Live Application](https://rohit-kumar-p6-sentry.streamlit.app)
 
